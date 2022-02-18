@@ -1,5 +1,3 @@
-
-
 // bibliotek do błędów http
 var createError = require("http-errors");
 // przechowywanie sesji na podstawie cookie przez określony czas po zalogowaniu
@@ -20,7 +18,7 @@ mongoose.connect(config.db, { useNewUrlParser: true });
 
 // test połączenia
 var db = mongoose.connection;
-db.on('error', console.error.bind(console,'connection error:'));
+db.on("error", console.error.bind(console, "connection error:"));
 // db.once('open',function(){
 //   console.log('db connect');
 // })
@@ -30,6 +28,7 @@ var indexRouter = require("./routes/index");
 var newsRouter = require("./routes/news");
 var quizRouter = require("./routes/quiz");
 var adminRouter = require("./routes/admin");
+var apiRouter = require("./routes/api");
 
 var app = express();
 
@@ -67,6 +66,7 @@ app.use("/", indexRouter);
 app.use("/news", newsRouter);
 app.use("/quiz", quizRouter);
 app.use("/admin", adminRouter);
+app.use("/api", apiRouter);
 
 // catch 404 and forward to error handler
 // wyłapywanie adresów które nie istnieją za pomocą błędów z biblioteki http errors
