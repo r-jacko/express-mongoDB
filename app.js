@@ -1,11 +1,30 @@
+// 0DvrOxoZc7VLgdEq
+// mongodb+srv://admin:0DvrOxoZc7VLgdEq@cluster0.wspgp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+
 // bibliotek do błędów http
 var createError = require("http-errors");
+// przechowywanie sesji na podstawie cookie przez określony czas po zalogowaniu
+var cookieSession = require("cookie-session");
 var express = require("express");
 // do pobierania public
 var path = require("path");
 var cookieParser = require("cookie-parser");
 // zrzucanie logów w trybie dev
 var logger = require("morgan");
+
+// config do cookies
+var config = require("./config");
+
+// baza danych i łączenie
+var mongoose = require("mongoose");
+mongoose.connect(config.db, { useNewUrlParser: true });
+
+// test połączenia
+var db = mongoose.connection;
+db.on('error', console.error.bind(console,'connection error:'));
+// db.once('open',function(){
+//   console.log('db connect');
+// })
 
 // importy routingów
 var indexRouter = require("./routes/index");
@@ -27,6 +46,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 // deklaracja katalogu statycznego
 app.use(express.static(path.join(__dirname, "public")));
+app.use(
+  cookieSession({
+    name: "session",
+    keys: config.keySession,
+    // cookie options
+    maxAge: config.maxAgeSession,
+  })
+);
 
 // funkcja która będzie routem, będzie pobierała z requesta aktualny adres strony i go będziemy przekazywać do każdego naszego widoku, żeby puścić skrypt dalej wykorzystamy metode next. Jeżeli będę na /news najpierw wykona się ten routing a dzięki next przejdzie do zadeklarowanego routingu
 
