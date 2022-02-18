@@ -6,7 +6,9 @@ const defaultSort = -1;
 /* GET home page. */
 router.get("/", (req, res) => {
   const search = req.query.search || "";
-  const sort = req.query.sort || defaultSort;
+  let sort = req.query.sort;
+  console.log(sort);
+
   if (sort !== "-1" && sort !== "1") {
     sort = defaultSort;
   }
