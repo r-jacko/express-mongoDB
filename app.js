@@ -1,5 +1,4 @@
-// 0DvrOxoZc7VLgdEq
-// mongodb+srv://admin:0DvrOxoZc7VLgdEq@cluster0.wspgp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+
 
 // bibliotek do błędów http
 var createError = require("http-errors");
